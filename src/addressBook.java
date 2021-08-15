@@ -18,8 +18,10 @@ public class addressBook {
                     book.addContact();
                     break;
                 case 2:
+                    book.editContact();
                     break;
                 case 3:
+                    book.deleteContact();
                     break;
                 case 4:
                     book.printAddressBook();
@@ -30,12 +32,10 @@ public class addressBook {
                 default:
                     System.out.println("please enter correct choice");
                     break;
-
             }
         }
     }
 }
-
 
 class AddressBookLogic {
 
@@ -57,11 +57,11 @@ class AddressBookLogic {
     public String phoneNumber;
     public String email;
 
-    public void addContact(){
+    public void scan(){
 
         Scanner sc = new Scanner(System.in);
 
-        System.out.println("**** let's create a contact in our contact book ****\n");
+
         System.out.println("Enter your first name :- ");
         firstName = sc.nextLine();
         System.out.println("Enter your last name :- ");
@@ -78,6 +78,12 @@ class AddressBookLogic {
         phoneNumber = sc.nextLine();
         System.out.println("Enter your email :- ");
         email = sc.nextLine();
+    }
+
+    public void addContact(){
+
+        System.out.println("**** let's create a contact in our contact book ****\n");
+        scan();
 
         arrFirstName.add(firstName);
         arrLastName.add(lastName);
@@ -87,6 +93,33 @@ class AddressBookLogic {
         arrZipCode.add(zipCode);
         arrPhoneNumber.add(phoneNumber);
         arrEmail.add(email);
+
+    }
+
+    public void editContact(){
+        System.out.println("Enter users's first name :- ");
+        Scanner sc =new Scanner(System.in);
+        String name = sc.nextLine();
+        for (int i =0 ;i<arrLastName.size(); i++){
+            if (name.equals(arrFirstName.get(i))){
+
+                arrFirstName.remove(i);
+                arrLastName.remove(i);
+                arraddress.remove(i);
+                arrCity.remove(i);
+                arrState.remove(i);
+                arrZipCode.remove(i);
+                arrPhoneNumber.remove(i);
+                arrEmail.remove(i);
+
+                System.out.println("**** let's edit a contact in our contact book ****\n");
+                addContact();
+                break;
+            }
+        }
+    }
+
+    public void deleteContact(){
 
     }
 
