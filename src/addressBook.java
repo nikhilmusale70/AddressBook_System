@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.SortedMap;
 
 public class addressBook {
 
@@ -121,6 +122,25 @@ class AddressBookLogic {
 
     public void deleteContact(){
 
+        System.out.println("Enter users's first name to delete from contact book :- ");
+        Scanner sc =new Scanner(System.in);
+        String name = sc.nextLine();
+        for (int j =0 ;j<arrLastName.size();j++){
+            if (name.equals(arrFirstName.get(j))) {
+
+                arrFirstName.remove(j);
+                arrLastName.remove(j);
+                arraddress.remove(j);
+                arrCity.remove(j);
+                arrState.remove(j);
+                arrZipCode.remove(j);
+                arrPhoneNumber.remove(j);
+                arrEmail.remove(j);
+
+                System.out.println("Deleted Contact Succesfully");
+                break;
+            }
+        }
     }
 
     public void printAddressBook(){
