@@ -1,31 +1,30 @@
-import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.SortedMap;
 
 public class addressBook {
+
 
     public static void main(String[] args) {
         int flag=0;
         Scanner sc = new Scanner(System.in);
-        AddressBookLogic book = new AddressBookLogic();
+
+        AddressBookLogic abl = new AddressBookLogic();
 
         while(flag==0) {
-
             System.out.println("****MENU**** \n1. Add a contact\n2. Edit a contact \n3. Delete a contact \n4. Print all the contacts\n5. Exit");
             int i = sc.nextInt();
 
             switch (i) {
                 case 1:
-                    book.addContact();
+                    abl.addContact();
                     break;
                 case 2:
-                    book.editContact();
+                    abl.editContact();
                     break;
                 case 3:
-                    book.deleteContact();
+                    abl.deleteContact();
                     break;
                 case 4:
-                    book.printAddressBook();
+                    abl.printAddressBook();
                     break;
                 case 5:
                     flag = 1;
@@ -38,16 +37,9 @@ public class addressBook {
     }
 }
 
-class AddressBookLogic {
+class AddressBookLogic{
+    public static AddressBookLogic[] book;
 
-    ArrayList<String> arrFirstName = new ArrayList();
-    ArrayList<String> arrLastName = new ArrayList();
-    ArrayList<String> arraddress = new ArrayList();
-    ArrayList<String> arrCity = new ArrayList();
-    ArrayList<String> arrState = new ArrayList();
-    ArrayList<String> arrZipCode = new ArrayList();
-    ArrayList<String> arrPhoneNumber = new ArrayList();
-    ArrayList<String> arrEmail = new ArrayList();
 
     public String firstName;
     public String lastName;
@@ -58,10 +50,24 @@ class AddressBookLogic {
     public String phoneNumber;
     public String email;
 
+    public AddressBookLogic(String firstName, String lastName, String address, String city, String state, String zipCode, String phoneNumber, String email){
+        this.firstName = firstName;
+        this.lastName =lastName;
+        this.address =address;
+        this.state =state;
+        this.city =city;
+        this.email = email ;
+        this.phoneNumber =phoneNumber;
+        this.zipCode =zipCode;
+    }
+
+    public AddressBookLogic() {
+
+    }
+
     public void scan(){
 
         Scanner sc = new Scanner(System.in);
-
 
         System.out.println("Enter your first name :- ");
         firstName = sc.nextLine();
@@ -82,80 +88,56 @@ class AddressBookLogic {
     }
 
     public void addContact(){
+        Scanner sc =new Scanner(System.in);
+        System.out.println("Enter number of contacts you want to add :- ");
+        int numberOfContact = sc.nextInt();
+        book = new AddressBookLogic[numberOfContact];
 
-        System.out.println("**** let's create a contact in our contact book ****\n");
-        scan();
+        for (int i=0; i<book.length; i++){
+            scan();
+            AddressBookLogic ab = new AddressBookLogic(firstName, lastName, address, city, state, zipCode, phoneNumber, email);
 
-        arrFirstName.add(firstName);
-        arrLastName.add(lastName);
-        arraddress.add(address);
-        arrCity.add(city);
-        arrState.add(state);
-        arrZipCode.add(zipCode);
-        arrPhoneNumber.add(phoneNumber);
-        arrEmail.add(email);
-
+            book[i] = ab;
+        }
     }
 
     public void editContact(){
-        System.out.println("Enter users's first name :- ");
-        Scanner sc =new Scanner(System.in);
-        String name = sc.nextLine();
-        for (int i =0 ;i<arrLastName.size(); i++){
-            if (name.equals(arrFirstName.get(i))){
-
-                arrFirstName.remove(i);
-                arrLastName.remove(i);
-                arraddress.remove(i);
-                arrCity.remove(i);
-                arrState.remove(i);
-                arrZipCode.remove(i);
-                arrPhoneNumber.remove(i);
-                arrEmail.remove(i);
-
-                System.out.println("**** let's edit a contact in our contact book ****\n");
-                addContact();
-                break;
+        System.out.println("Enter the First Name to edit:- ");
+        Scanner sc = new Scanner(System.in);
+        String fN= sc.nextLine();
+        for (int i=0; i< book.length; i++){
+            if (book[i].firstName.equals(fN)){
+                scan();
+                AddressBookLogic ab =new AddressBookLogic(firstName, lastName, address, city, state, zipCode, phoneNumber, email);
+                book[i]=ab;
             }
         }
     }
 
     public void deleteContact(){
-
-        System.out.println("Enter users's first name to delete from contact book :- ");
+        System.out.println("Enter first name for deleting the contact");
         Scanner sc =new Scanner(System.in);
-        String name = sc.nextLine();
-        for (int j =0 ;j<arrLastName.size();j++){
-            if (name.equals(arrFirstName.get(j))) {
-
-                arrFirstName.remove(j);
-                arrLastName.remove(j);
-                arraddress.remove(j);
-                arrCity.remove(j);
-                arrState.remove(j);
-                arrZipCode.remove(j);
-                arrPhoneNumber.remove(j);
-                arrEmail.remove(j);
-
-                System.out.println("Deleted Contact Succesfully");
-                break;
+        String firstN = sc.nextLine();
+        for (int i=0; i<book.length; i++){
+            if (book[i].firstName.equals(firstN)){
+                AddressBookLogic ab = new AddressBookLogic(null ,null ,null ,null ,null ,null ,null ,null);
+                book[i]=ab;
             }
         }
     }
 
     public void printAddressBook(){
-        for (int i=0; i<arrFirstName.size(); i++){
+        for (int i=0; i<book.length; i++){
             System.out.println("\n****Page Number "+ (i+1) + "****\n");
-            System.out.println("First name :- " + arrFirstName.get(i));
-            System.out.println("Last name :- " + arrLastName.get(i));
-            System.out.println("Address :- " + arraddress.get(i));
-            System.out.println("City :- " + arrCity.get(i));
-            System.out.println("State :- " + arrState.get(i));
-            System.out.println("Zip Code :- " + arrZipCode.get(i));
-            System.out.println("Phone Number :- " + arrPhoneNumber.get(i));
-            System.out.println("Email :- " + arrEmail.get(i));
+            System.out.println("First name :- " + book[i].firstName);
+            System.out.println("Last name :- " +  book[i].lastName);
+            System.out.println("Address :- " +  book[i].address);
+            System.out.println("City :- " +  book[i].city);
+            System.out.println("State :- " +  book[i].state);
+            System.out.println("Zip Code :- " +  book[i].zipCode);
+            System.out.println("Phone Number :- " + book[i].phoneNumber);
+            System.out.println("Email :- " + book[i].email);
             System.out.println("\n");
         }
     }
-
 }
